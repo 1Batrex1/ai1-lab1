@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
   let map = L.map('map').setView([53.001, 53.001], 13);
+  let permission = Notification.requestPermission();
   L.tileLayer.provider('Esri.WorldImagery').addTo(map)
 
   document.getElementById("locationButton").addEventListener('click', function () {
@@ -64,7 +65,7 @@ document.addEventListener('DOMContentLoaded', function () {
       puzzlePiecesDiv.style.textAlign = "center";
       puzzlePiecesDiv.style.background = "grey";
       if ("Notification" in window) {
-        Notification.requestPermission().then(function (result) {
+        permission.then(function (result) {
           if (result === "granted") {
             new Notification("Congratulations! You solved the puzzle!");
           }
