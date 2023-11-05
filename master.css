@@ -1,24 +1,25 @@
 
-#map
-{
+#map {
   height: 50vh;
 }
-#puzzlePieces
-{
-  height: 50vh;
-}
-#puzzle
-{
-  height: 50vh;
-  width: 50%;
+
+#puzzlePieces {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
 
 }
-#main{
+
+#puzzle {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+#main {
   display: grid;
   width: 100%;
-  height: 250px;
   grid-template-areas:
-  "map puzzle"
-  "controls controls"
+  "wholeMap puzzle"
   "puzzlePieces puzzlePieces";
+  grid-template-columns: 50% 50%;
 }
+

@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function () {
           piece.id = "piece" + z;
           piece.width = width;
           piece.height = height;
-          piece.getContext("2d").drawImage(canvas, i * width, j * height, width, height, 0, 0, width, height);
+          piece.getContext("2d").drawImage(canvas, j * width, i * height, width, height, 0, 0, width, height);
           piece.draggable = true;
           piece.addEventListener("dragstart", function (event) {
             this.style.border = "5px dashed #D8D8FF";
@@ -41,40 +41,71 @@ document.addEventListener('DOMContentLoaded', function () {
           z++;
         }
       }
-      drawDragableDivs(width, height);
+      drawDraggableDivs(width, height);
     });
   });
 
-  function drawDragableDivs(width, height) {
-    // i need to drow puzzle pieces dragable zone like that
+  async function checkIfPuzzleIsSolved() {
+    let puzzlePiecesDiv = document.getElementById("puzzle");
+    let puzzlePieces = puzzlePiecesDiv.getElementsByTagName("canvas");
+    let solved = true;
+    if (puzzlePieces.length !== 16) {
+      return;
+    }
+    for (let i = 0; i < puzzlePieces.length; i++) {
+      if (puzzlePieces[i].id !== "piece" + i) {
+        solved = false;
+        break;
+      }
+    }
+    if (solved) {
+      puzzlePiecesDiv.textContent = "Congratulations! You solved the puzzle!";
+      puzzlePiecesDiv.style.display = "inline-block";
+      puzzlePiecesDiv.style.textAlign = "center";
+      puzzlePiecesDiv.style.background = "grey";
+      if ("Notification" in window) {
+        Notification.requestPermission().then(function (result) {
+          if (result === "granted") {
+            new Notification("Congratulations! You solved the puzzle!");
+          }
+        });
+      }
+    }
+  }
+
+  function drawDraggableDivs(width, height) {
     let puzzlePiecesDiv = document.getElementById("puzzle");
     puzzlePiecesDiv.innerHTML = "";
-    let z = 0
     for (let i = 0; i < 4; i++) {
       for (let j = 0; j < 4; j++) {
 
         let piece = document.createElement("div");
-        piece.id = "piece" + z;
+        piece.className = "drag";
         piece.style.width = width + "px";
         piece.style.height = height + "px";
-        piece.style.border = "5px dashed #D8D8FF";
+        piece.style.border = "1px dashed #D8D8FF";
         piece.style.display = "inline-block";
         piece.addEventListener("dragenter", function (event) {
-          this.style.border = "2px solid #7FE9D9";
+          this.style.border = "1px solid #7FE9D9";
         });
         piece.addEventListener("dragleave", function (event) {
-          this.style.border = "2px dashed #7f7fe9";
+          this.style.border = "1px dashed #7f7fe9";
         });
         piece.addEventListener("dragover", function (event) {
           event.preventDefault();
         });
         piece.addEventListener("drop", function (event) {
-          let myElement = document.querySelector("#" + event.dataTransfer.getData('text'));
+          //if we have element in this div, we don't want to drop another one
+          if (this.getElementsByTagName("canvas").length > 0) {
+            document.getElementById("puzzlePieces").appendChild(this.getElementsByTagName("canvas")[0]);
+            this.innerHTML = "";
+          }
+          let myElement = document.querySelector("#" + event.dataTransfer.getData("text"));
           this.appendChild(myElement)
-          this.style.border = "2px dashed #7f7fe9";
+          checkIfPuzzleIsSolved();
         }, false);
         puzzlePiecesDiv.appendChild(piece);
-        z++;
+
       }
     }
   }
