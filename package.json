@@ -1,0 +1,11 @@
+{
+  "devDependencies": {
+    "mix": "^0.0.1",
+    "path-browserify": "^1.0.1",
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.3.2"
+  },
+  "dependencies": {
+    "laravel-mix": "^6.0.49"
+  }
+}
