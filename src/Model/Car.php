@@ -59,11 +59,11 @@ class Car
     if (isset($array['id']) && !$this->getId()) {
       $this->setId($array['id']);
     }
-    if (isset($array['subject'])) {
-      $this->setModel($array['subject']);
+    if (isset($array['model'])) {
+      $this->setModel($array['model']);
     }
-    if (isset($array['content'])) {
-      $this->setDescription($array['content']);
+    if (isset($array['description'])) {
+      $this->setDescription($array['description']);
     }
 
     return $this;
@@ -108,8 +108,8 @@ class Car
       $sql = "INSERT INTO car (model, description) VALUES (:model, :description)";
       $statement = $pdo->prepare($sql);
       $statement->execute([
-        'subject' => $this->getModel(),
-        'content' => $this->getDescription(),
+        'model' => $this->getModel(),
+        'description' => $this->getDescription(),
       ]);
 
       $this->setId($pdo->lastInsertId());
@@ -117,8 +117,8 @@ class Car
       $sql = "UPDATE car SET model = :model, description = :description WHERE id = :id";
       $statement = $pdo->prepare($sql);
       $statement->execute([
-        ':subject' => $this->getModel(),
-        ':content' => $this->getDescription(),
+        ':model' => $this->getModel(),
+        ':description' => $this->getDescription(),
         ':id' => $this->getId(),
       ]);
     }
