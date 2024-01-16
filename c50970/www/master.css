@@ -1,0 +1,42 @@
+.weatherBlock {
+  border: 1px solid black;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 10%;
+  grid-template-areas:
+        "dateBlock iconBlock"
+        "temperatureBlock iconBlock"
+        "feelsTemperatureBlock descriptionBlock";
+  width: 20%;
+  padding: 10px;
+  margin: 2% auto 0;
+}
+
+#city{
+  text-align: center;
+  font-size: 3em;
+  font-weight: bold;
+  margin: 0 auto;
+  text-transform: uppercase;
+  padding: 0;
+}
+
+.dateBlock {
+  grid-area: dateBlock;
+}
+
+.temperatureBlock {
+  grid-area: temperatureBlock;
+}
+
+.feelsTemperatureBlock {
+  grid-area: feelsTemperatureBlock;
+}
+
+.iconBlock {
+  grid-area: iconBlock;
+}
+
+.descriptionBlock {
+  grid-area: descriptionBlock;
+}
